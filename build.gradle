@@ -22,11 +22,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
 	implementation 'org.springframework.cloud:spring-cloud-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'mysql:mysql-connector-java'
+
 	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
 	compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.1'
 	compile group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
 	compile group: 'javax.activation', name: 'activation', version: '1.1.1'
+
+	//project lombok integration
+	compileOnly 'org.projectlombok:lombok:1.18.6'
+	annotationProcessor 'org.projectlombok:lombok:1.18.6'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
