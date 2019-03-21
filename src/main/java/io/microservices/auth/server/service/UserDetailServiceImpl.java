@@ -1,7 +1,7 @@
 package io.microservices.auth.server.service;
 
 //import io.microservices.auth.server.model.AuthUserDetail;
-import io.microservices.auth.server.model.AuthUserDetails;
+import io.microservices.auth.server.model.AuthUserDetail;
 import io.microservices.auth.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
@@ -18,7 +18,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails userDetails = new AuthUserDetails(userRepository.findByUsername(username).orElseThrow(
+        UserDetails userDetails = new AuthUserDetail(userRepository.findByUsername(username).orElseThrow(
                 ()-> new UsernameNotFoundException("username not found in the database")));
 
         new AccountStatusUserDetailsChecker().check(userDetails);
