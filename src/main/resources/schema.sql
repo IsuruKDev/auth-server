@@ -108,7 +108,8 @@ create table if not exists oauth_code (
   code VARCHAR(256),
   authentication LONG VARBINARY,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  primary key (code_id)
 );
 
 create table if not exists oauth_approvals (
@@ -119,5 +120,6 @@ create table if not exists oauth_approvals (
 	status VARCHAR(10),
 	expires_at TIMESTAMP,
 	created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  primary key (oauth_approvals_id)
 );
