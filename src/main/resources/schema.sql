@@ -12,7 +12,7 @@ create table if not exists  oauth_client_details (
   authorized_grant_types varchar(1024) default null,
   authorities varchar(1024) default null,
   additional_information varchar(4096) default null,
-  autoapprove varchar(255) default null,
+  auto_approve varchar(255) default null,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   primary key (client_id)
@@ -42,9 +42,9 @@ create table if not exists  user (
   password varchar(1024) not null,
   email varchar(1024) not null,
   enabled tinyint(4) not null,
-  accountNonExpired tinyint(4) not null,
-  credentialsNonExpired tinyint(4) not null,
-  accountNonLocked tinyint(4) not null,
+  account_non_expired tinyint(4) not null,
+  credentials_non_expired tinyint(4) not null,
+  account_non_locked tinyint(4) not null,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   primary key (id),
@@ -79,7 +79,7 @@ create table if not exists oauth_client_token (
   authentication_id VARCHAR(256) PRIMARY KEY,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  user_name VARCHAR(256),
+  username VARCHAR(256),
   client_id VARCHAR(256)
 );
 
@@ -87,7 +87,7 @@ create table if not exists oauth_access_token (
   token_id VARCHAR(256),
   token LONG VARBINARY,
   authentication_id VARCHAR(256) PRIMARY KEY,
-  user_name VARCHAR(256),
+  username VARCHAR(256),
   client_id VARCHAR(256),
   authentication LONG VARBINARY,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -104,6 +104,7 @@ create table if not exists oauth_refresh_token (
 );
 
 create table if not exists oauth_code (
+  code_id int(11) not null auto_increment,
   code VARCHAR(256),
   authentication LONG VARBINARY,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -111,10 +112,12 @@ create table if not exists oauth_code (
 );
 
 create table if not exists oauth_approvals (
-	userId VARCHAR(256),
-	clientId VARCHAR(256),
+  oauth_approvals_id int(11) not null auto_increment,
+	user_id VARCHAR(256),
+	client_id VARCHAR(256),
 	scope VARCHAR(256),
 	status VARCHAR(10),
+	expires_at TIMESTAMP,
 	created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

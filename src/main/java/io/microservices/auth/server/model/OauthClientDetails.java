@@ -37,7 +37,7 @@ public class OauthClientDetails {
     private String authorities;
     @Column(name = "additional_information")
     private String additionalInformation;
-    @Column(name = "autoapprove")
+    @Column(name = "auto_approve")
     private String autoApprove;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

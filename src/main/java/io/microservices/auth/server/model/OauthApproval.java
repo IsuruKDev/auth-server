@@ -17,7 +17,7 @@ public class OauthApproval {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "oauth_approvals_id")
     private int oauthApprovalsId;
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private String userId;
     @Column(name = "scope")
     private String scope;
@@ -25,7 +25,7 @@ public class OauthApproval {
     private String status;
     @Column(name = "client_id")
     private String clientId;
-    @Column(name = "expiresAt")
+    @Column(name = "expires_at")
     private Date expiresAt;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -33,7 +33,7 @@ public class OauthApproval {
     private Date createdAt;
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_modified_at")
+    @Column(name = "updated_at")
     private Date lastModifiedAt;
 
 
