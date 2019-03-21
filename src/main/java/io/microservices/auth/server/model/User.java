@@ -39,6 +39,7 @@ public class User {
         this.accountNonExpired = user.isAccountNonExpired();
         this.credentialsNonExpired = user.isCredentialsNonExpired();
         this.accountNonLocked = user.isAccountNonLocked();
+        this.roles = user.getRoles();
     }
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -20,5 +20,15 @@ spring:
 logging:
   level:
     org:
+      springframework:
+        data: ERROR
+        security: ERROR
+        cloud: ERROR
+        boot: ERROR
       hibernate:
-        type:trace
+        type:ERROR
+
+    io:
+      microservices:
+        auth:
+          server:DEBUG

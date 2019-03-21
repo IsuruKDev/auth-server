@@ -14,8 +14,6 @@ public class Role {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "desc")
-    private String description;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
