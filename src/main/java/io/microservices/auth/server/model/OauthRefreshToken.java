@@ -1,5 +1,6 @@
 package io.microservices.auth.server.model;
 
+
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,13 +11,17 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "permission")
-public class Permission {
+@Table(name = "oauth_refresh_token")
+public class OauthRefreshToken {
 
+
+    @Column(name = "token")
+    private Long token;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "token_id")
+    private String tokenId;
+    @Column(name = "authentication")
+    private Long authentication;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", updatable = false)
@@ -25,4 +30,15 @@ public class Permission {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
+
+
+
+    public OauthRefreshToken() {
+    }
+
+    public OauthRefreshToken(OauthRefreshToken refreshToken) {
+        this.token = refreshToken.getToken();
+        this.tokenId = refreshToken.getTokenId();
+        this.authentication = refreshToken.getAuthentication();
+    }
 }
