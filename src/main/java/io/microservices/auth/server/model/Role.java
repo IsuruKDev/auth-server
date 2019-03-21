@@ -28,7 +28,6 @@ public class Role {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "permission_role",joinColumns = {
             @JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {
