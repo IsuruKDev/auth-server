@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 public class AuthServiceConfiguration extends WebSecurityConfigurerAdapter {
@@ -32,5 +34,25 @@ public class AuthServiceConfiguration extends WebSecurityConfigurerAdapter {
         auth.
                 userDetailsService(userDetailsService)
                 .passwordEncoder(encoder());
+    }
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(jwtTokenEnhancer());
+    }
+
+    @Bean
+    protected JwtAccessTokenConverter jwtTokenEnhancer() {
+		/*
+	    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "mySecretKey".toCharArray());
+	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+	    */
+        //-- for the simple demo purpose, used the secret for signing.
+        //-- for production, it is recommended to use public/private key pair
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("Demo-Key-1");
+
+        return converter;
     }
 }
