@@ -12,9 +12,13 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration
 public class AuthorizationServerConfiguration implements AuthorizationServerConfigurer {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfiguration.class);
 
     @Autowired
     PasswordEncoder encoder;
@@ -33,6 +37,7 @@ public class AuthorizationServerConfiguration implements AuthorizationServerConf
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+
         security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
     }
 

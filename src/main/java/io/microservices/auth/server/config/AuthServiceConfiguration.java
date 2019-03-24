@@ -1,5 +1,7 @@
 package io.microservices.auth.server.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 
 @Configuration
 public class AuthServiceConfiguration extends WebSecurityConfigurerAdapter {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(AuthServiceConfiguration.class);
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -40,11 +44,15 @@ public class AuthServiceConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenStore tokenStore() {
+        LOGGER.info("Return jwt token store");
+
         return new JwtTokenStore(jwtTokenEnhancer());
     }
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
+
+        LOGGER.info("Get value to enhance jwt token");
 	    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "babyio".toCharArray());
 	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
