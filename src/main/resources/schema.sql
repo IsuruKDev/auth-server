@@ -89,6 +89,8 @@ create table if not exists oauth_access_token (
   authentication_id VARCHAR(256) PRIMARY KEY,
   username VARCHAR(256),
   client_id VARCHAR(256),
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   authentication LONG VARBINARY,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

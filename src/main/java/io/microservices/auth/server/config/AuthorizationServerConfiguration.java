@@ -1,7 +1,6 @@
 package io.microservices.auth.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,12 +9,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration
 public class AuthorizationServerConfiguration implements AuthorizationServerConfigurer {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfiguration.class);
 
     @Autowired
     PasswordEncoder encoder;
@@ -24,15 +27,17 @@ public class AuthorizationServerConfiguration implements AuthorizationServerConf
     DataSource dataSource;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private TokenStore tokenStore;
 
-    @Bean
-    TokenStore jdbcTokenStore(){
-        return new JdbcTokenStore(dataSource);
-    }
+    @Autowired
+    private JwtAccessTokenConverter jwtTokenEnhancer;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+
         security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
     }
 
@@ -43,7 +48,7 @@ public class AuthorizationServerConfiguration implements AuthorizationServerConf
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(jdbcTokenStore());
+        endpoints.tokenStore(tokenStore).tokenEnhancer(jwtTokenEnhancer);
         endpoints.authenticationManager(authenticationManager);
     }
 }
